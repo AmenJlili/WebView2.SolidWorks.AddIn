@@ -1,5 +1,4 @@
-﻿using Microsoft.Web.WebView2.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,15 +23,12 @@ namespace WebView2.SolidWorks.AddIn
         public TaskpaneHostControl()
         {
             InitializeComponent();
-            InitializeBrowser("https://www.google.com/");
+            
         }
 
-        private async void InitializeBrowser(string url = null)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var userDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\SLDWORKS";
-            var env = await CoreWebView2Environment.CreateAsync(userDataFolder);
-            await webView.EnsureCoreWebView2Async(env);
-            webView.CoreWebView2.Navigate(url);
+            WebView.Load("www.google.ca");
         }
     }
 }

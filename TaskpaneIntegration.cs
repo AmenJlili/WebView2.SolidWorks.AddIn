@@ -6,9 +6,11 @@ using System.Runtime.InteropServices;
 
 namespace WebView2.SolidWorks.AddIn
 {
+    [Guid("060E2203-CCC3-4FDD-A9AC-C7C7F079DEA4"), ComVisible(true)]
     /// <summary>
     /// Our SolidWorks taskpane add-in
     /// </summary>
+
     public class TaskpaneIntegration : ISwAddin
     {
         #region Private Members
@@ -63,11 +65,30 @@ namespace WebView2.SolidWorks.AddIn
             // Setup callback info
             var ok = mSolidWorksApplication.SetAddinCallbackInfo2(0, this, mSwCookie);
 
+
+            // load cef sharp 
+            loadCefRuntime();
+
             // Create our UI
             LoadUI();
 
             // Return ok
             return true;
+        }
+
+        private void loadCefRuntime()
+        {
+            var thisAssemblyFile = new FileInfo(this.GetType().Assembly.Location);
+            var thisAssemblyDir = thisAssemblyFile.Directory;
+
+            //System.Reflection.Assembly.LoadFrom(System.IO.Path.Combine(thisAssemblyDir.FullName, "libcef.dll"));
+
+           // System.Reflection.Assembly.LoadFrom(System.IO.Path.Combine(thisAssemblyDir.FullName, "libEGL.dll"));
+
+            System.Reflection.Assembly.LoadFrom(System.IO.Path.Combine(thisAssemblyDir.FullName, "cefsharp.dll"));
+            System.Reflection.Assembly.LoadFrom(System.IO.Path.Combine(thisAssemblyDir.FullName, "cefsharp.core.dll"));
+            System.Reflection.Assembly.LoadFrom(System.IO.Path.Combine(thisAssemblyDir.FullName, "cefsharp.core.runtime.dll"));
+            System.Reflection.Assembly.LoadFrom(System.IO.Path.Combine(thisAssemblyDir.FullName, "cefsharp.wpf.dll"));
         }
 
         /// <summary>
